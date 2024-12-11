@@ -12,8 +12,11 @@ module.exports = {
 
       const data = await Contact.findAndCountAll({
         where: {
-          nama_lengkap: {
-            [Op.like]: `%${search}%`,
+          [Op.and]: {
+            nama_lengkap: {
+              [Op.like]: `%${search}%`,
+            },
+            ...(req.query.keterangan && { keterangan: req.query.keterangan }),
           },
         },
         limit,
